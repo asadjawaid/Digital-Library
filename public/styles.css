@@ -62,12 +62,26 @@ a:visited {
   text-align: center;
 }
 
-/* 
-.form-sign-in #sign-in-google {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-} */
+.form-sign-in .inner-form-div {
+  margin: 50px;
+}
+
+.form-sign-in .inner-form-div #sign-up-div {
+  display: flex;
+  background-color: #066eaf;
+  flex-direction: column;
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-sign-in .inner-form-div #sign-in-div {
+  display: flex;
+  background-color: #066eaf;
+  flex-direction: column;
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

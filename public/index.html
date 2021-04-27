@@ -17,14 +17,28 @@
   <h1 id="header-title">Digital Library</h1>
 
   <div class="form-sign-in">
+    <!-- Top Div -->
     <div class="form-header">
       <p id="get-started-text">To get started with Digital Library, please login with your Google Account.</p>
     </div>
     
-    <div class="cloud-storage-div">
-      <button id="sign-in-google">Login with Google</button>
-    </div>
-    
+    <!-- Inner -->
+    <div class="inner-form-div">
+      <!-- Sign Up Div -->
+      <div id="sign-up-div">
+        <input type="text" name="email" id="email_register" placeholder="Enter your email">
+        <input type="password" name="password" id="password_register" placeholder="Enter your password">
+        <button type="submit" id="sign-up-button">Sign Up</button>
+      </div>
+
+      <!-- Sign In Div -->
+      <div id="sign-in-div">
+        <input type="text" name="email" id="email_login" placeholder="Enter your email">
+        <input type="password" name="password" id="password_login" placeholder="Enter your password">
+        <button type="submit" id="sign-in-button">Sign In</button>
+        <button id="sign-in-google">Login with Google</button>
+      </div>
+    </div>    
   </div>
 
   <p id="made-by">Made by <a href="https://www.linkedin.com/in/asadjawaid-/" target="_blank">Asad Jawaid</a></p>
