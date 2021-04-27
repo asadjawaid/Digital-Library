@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  background-image: linear-gradient(rgb(1, 34, 54), rgb(0, 2, 3));
+}
+
+#header-title {
+  font-size: 5em;
+  text-align: center;
+  color: rgb(238, 243, 224);
+  text-transform: uppercase;
+  margin: 30px 0;
+}
+
+/* footer */
+#made-by {
+  color: rgb(238, 243, 224);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 10px;
+}
+
+#made-by a:link {
+  text-decoration: none;
+  color: rgb(238, 243, 224);
+}
+
+a:visited {
+  text-decoration: none;
+  color: rgb(238, 243, 224);
+}
+
+/* main */
+.form-sign-in {
+  background-color: #02283f;
+  height: 70vh;
+  margin: auto;
+  width: 35%;
+  margin-bottom: 100px;
+  border-bottom-right-radius: 10%;
+  border-bottom-left-radius: 10%;
+  box-shadow: 0 0 150px 30px rgba(0, 0, 0, 0.1) inset;
+}
+
+.form-sign-in .form-header {
+  background-color: #066eaf;
+  padding: 30px 0;
+}
+
+.form-sign-in #get-started-text {
+  color: rgb(238, 243, 224);
+  font-size: 1.2em;
+  text-align: center;
+}
+
+/* 
+.form-sign-in #sign-in-google {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+} */

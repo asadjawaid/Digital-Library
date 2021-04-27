@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="shortcut icon" href="book-logo.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <h1 id="header-title">Digital Library</h1>
+
+  <div class="form-sign-in">
+    <div class="form-header">
+      <p id="get-started-text">To get started with Digital Library, please login with your Google Account.</p>
+    </div>
+    
+    <div class="cloud-storage-div">
+      <button id="sign-in-google">Login with Google</button>
+    </div>
+    
+  </div>
+
+  <p id="made-by">Made by <a href="https://www.linkedin.com/in/asadjawaid-/" target="_blank">Asad Jawaid</a></p>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyB_odTppr4i7MyGgG8K60fGQ0nzSc8csf8",
+      authDomain: "library-afb5a.firebaseapp.com",
+      projectId: "library-afb5a",
+      storageBucket: "library-afb5a.appspot.com",
+      messagingSenderId: "927459721225",
+      appId: "1:927459721225:web:bddcf25702d01feaa3f8d8",
+      measurementId: "G-HVLKZY35Q2"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    
+  </script>
+  <script src="login.js"></script>
+</body>
+
+</html>
