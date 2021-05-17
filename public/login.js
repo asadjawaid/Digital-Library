@@ -21,6 +21,7 @@ loginButton.addEventListener("click", loginUser);
 
 // This function shows a pop up menu to to allow the user to login into the website using their google account
 function googleLogin(e) {
+  e.preventDefault(); // prevent default behavior of submit
   let provider = new firebase.auth.GoogleAuthProvider();
 
   firebase
@@ -66,6 +67,19 @@ function registerUser(e) {
       .auth()
       .createUserWithEmailAndPassword(userEmail, userPassword)
       .then((userCredential) => {
+        const user = firebase.auth().currentUser;
+
+        user
+          .updateProfile({
+            displayName: userName,
+          })
+          .then(function () {
+            // Update successful.
+          })
+          .catch(function (error) {
+            // An error happened.
+          });
+
         signUpForm.reset(); // clear input fields
         window.location = "main.html"; // redirect the user to the main page
       })
