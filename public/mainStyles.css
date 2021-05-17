@@ -116,3 +116,29 @@ body {
 #main-content {
   margin-left: 400px;
 }
+
+/* nav styling */
+#main-content nav {
+  background-color: #001422;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+#main-content nav h1 {
+  color: #eef3e0;
+  font-size: 2.5em;
+}
+
+#main-content nav #logout-btn {
+  padding: 10px;
+  width: 120px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: #02283f;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 200;
+  cursor: pointer;
+}
