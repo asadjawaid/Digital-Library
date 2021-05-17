@@ -8,6 +8,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="mainStyles.css">
     <link rel="shortcut icon" href="book-logo.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -50,9 +51,69 @@
             <button id="logout-btn">Logout</button>
         </nav>
         
+        <div id="grid-books-container">
+            <div class="book-item">
+                <p id="close-icon-text"><i class="material-icons">close</i></p>
+                
+                <div class="icon-text-div">
+                    <p><i class="material-icons">book</i></p>
+                    <p>Book Name</p>
+                </div>
+
+                <div class="icon-text-div">
+                    <p><i class="material-icons">person</i></p>
+                    <p>Author: </p>
+                </div>
+
+                <div class="icon-text-div">
+                    <p><i class="material-icons">tag</i></p>
+                    <p>Total number of pages: </p>
+                </div>
+                <button id="read-status-btn">Read</button>
+            </div>
+            <!-- second -->
+            <div class="book-item">
+                <p id="close-icon-text"><i class="material-icons">close</i></p>
+            
+                <div class="icon-text-div">
+                    <p><i class="material-icons">book</i></p>
+                    <p>Book Name</p>
+                </div>
+            
+                <div class="icon-text-div">
+                    <p><i class="material-icons">person</i></p>
+                    <p>Author: </p>
+                </div>
+            
+                <div class="icon-text-div">
+                    <p><i class="material-icons">tag</i></p>
+                    <p>Total number of pages: </p>
+                </div>
+                <button id="read-status-btn">Read</button>
+            </div>
+            <!-- third -->
+            <div class="book-item">
+                <p id="close-icon-text"><i class="material-icons">close</i></p>
+            
+                <div class="icon-text-div">
+                    <p><i class="material-icons">book</i></p>
+                    <p>Book Name</p>
+                </div>
+            
+                <div class="icon-text-div">
+                    <p><i class="material-icons">person</i></p>
+                    <p>Author: </p>
+                </div>
+            
+                <div class="icon-text-div">
+                    <p><i class="material-icons">tag</i></p>
+                    <p>Total number of pages: </p>
+                </div>
+                <button id="read-status-btn">Read</button>
+            </div>
+        </div>
     </main>
     
-
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
