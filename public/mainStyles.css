@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  background-color: #02263b;
+}
+
+/* sidebar content */
+.sidebar {
+  position: fixed;
+  background-color: #066eaf;
+  width: 400px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: 20px 30px;
+}
+
+.sidebar #sidebar-header-text {
+  color: #02263b;
+  text-align: center;
+  font-size: 2.2em;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.sidebar .sidebar-book-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .sidebar-book-info .label-text {
+  color: #eef3e0;
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+.sidebar .sidebar-book-info .input-text {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border-style: none;
+  outline: none;
+}
+
+.sidebar .sidebar-book-info .sidebar-checkbox-div input {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.sidebar .sidebar-book-info .sidebar-checkbox-div label {
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.sidebar .sidebar-book-info .sidebar-buttons {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: #02283f;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.sidebar .sidebar-book-info #remove-all-books-btn {
+  background-color: #ea4335;
+}
+
+.sidebar .sidebar-book-info .library-log-div {
+  background-color: #02283f;
+  padding: 40px 25px;
+  margin-top: 90px;
+}
+
+.sidebar .sidebar-book-info .library-log-div h1 {
+  color: #eef3e0;
+  text-align: center;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.sidebar .sidebar-book-info .library-log-div .lib-log-text {
+  color: #eef3e0;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+.sidebar .sidebar-book-info .library-log-div .lib-log-text:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar .sidebar-book-info #made-by {
+  color: rgb(238, 243, 224);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 100px;
+}
+
+.sidebar .sidebar-book-info #made-by a:link {
+  text-decoration: none;
+  color: rgb(238, 243, 224);
+}
+
+/* main content */
+#main-content {
+  margin-left: 400px;
+}
