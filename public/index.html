@@ -19,33 +19,34 @@
   <div class="form-sign-in">
     <!-- Top Div -->
     <div class="form-header">
-      <p id="get-started-text">To get started with Digital Library, please login with your Google Account.</p>
+      <p id="get-started-text">To get started with Digital Library, please register or login.</p>
     </div>
-    
+
     <!-- Inner -->
     <div class="inner-form-div">
       <!-- Sign Up Div -->
-      <div id="sign-up-div">
-        <input type="text" name="email" id="email_register" placeholder="Enter your email">
-        <input type="password" name="password" id="password_register" placeholder="Enter your password">
-        <button type="submit" id="sign-up-button">Sign Up</button>
-      </div>
+      <form id="sign-up-div">
+        <input type="text" name="name" id="name_register" placeholder="Enter your full name" class="input-design">
+        <input type="text" name="email" id="email_register" placeholder="Enter your email" class="input-design">
+        <input type="password" name="password" id="password_register" placeholder="Enter your password" class="input-design">
+        <button type="submit" id="sign-up-button" class="btn-design">Sign Up</button>
+      </form>
 
       <!-- Sign In Div -->
-      <div id="sign-in-div">
-        <input type="text" name="email" id="email_login" placeholder="Enter your email">
-        <input type="password" name="password" id="password_login" placeholder="Enter your password">
-        <button type="submit" id="sign-in-button">Sign In</button>
-        <button id="sign-in-google">Login with Google</button>
-      </div>
-    </div>    
+      <form id="sign-in-div">
+        <input type="text" name="email" id="email_login" placeholder="Enter your email" class="input-design">
+        <input type="password" name="password" id="password_login" placeholder="Enter your password" class="input-design">
+        <button type="submit" id="sign-in-button" class="btn-design">Sign In</button>
+        <button id="sign-in-google" class="btn-design">Login with Google</button>
+      </form>
+    </div>
   </div>
 
   <p id="made-by">Made by <a href="https://www.linkedin.com/in/asadjawaid-/" target="_blank">Asad Jawaid</a></p>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-  
+
   <script>
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -60,7 +61,7 @@
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    
+
   </script>
   <script src="login.js"></script>
 </body>

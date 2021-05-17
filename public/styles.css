@@ -42,8 +42,7 @@ a:visited {
 /* main */
 .form-sign-in {
   background-color: #02283f;
-  height: 70vh;
-  margin: auto;
+  margin: 0 auto;
   width: 35%;
   margin-bottom: 100px;
   border-bottom-right-radius: 10%;
@@ -63,7 +62,8 @@ a:visited {
 }
 
 .form-sign-in .inner-form-div {
-  margin: 50px;
+  margin: 0 50px;
+  padding: 50px 0;
 }
 
 .form-sign-in .inner-form-div #sign-up-div {
@@ -71,7 +71,7 @@ a:visited {
   background-color: #066eaf;
   flex-direction: column;
   padding: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -81,7 +81,39 @@ a:visited {
   background-color: #066eaf;
   flex-direction: column;
   padding: 30px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-sign-in .inner-form-div .input-design {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border-style: none;
+  outline: none;
+}
+
+.form-sign-in .inner-form-div .input-design:focus {
+  border: solid 1px lightblue;
+}
+
+.form-sign-in .inner-form-div .btn-design {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: #02283f;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.form-sign-in .inner-form-div .btn-design:last-child {
+  margin-bottom: 0;
+}
+
+.form-sign-in .inner-form-div #sign-in-div #sign-in-google {
+  background-color: #ea4335;
 }
