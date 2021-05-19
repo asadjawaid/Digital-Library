@@ -29,9 +29,10 @@ console.log(gridContainerDiv);
 /* Event listeners */
 logoutButton.addEventListener("click", logoutUserOut);
 addBookButton.addEventListener("click", addBookToLibrary);
+gridContainerDiv.addEventListener("click", removeBook); // used for removing a book
+removeAllBooksButton.addEventListener("click", removeAllBooks);
 
 /* Functions */
-
 // Logout Function
 function logoutUserOut(e) {
   firebase
@@ -142,6 +143,24 @@ function addBookToLibrary(e) {
     bookItemDiv.appendChild(readButton);
 
     gridContainerDiv.appendChild(bookItemDiv);
+  }
+}
+
+// using event delegation by adding event listener to grid container then finding remove button
+function removeBook(e) {
+  if (e.target.parentElement.id === "close-icon-text") {
+    if (confirm("Are you sure you want to remove this book?")) {
+      e.target.parentElement.parentElement.remove();
+      console.log(e.target.parentElement.parentElement);
+    }
+  }
+}
+
+function removeAllBooks(e) {
+  if (confirm("Are you sure you want to remove all books?")) {
+    while (gridContainerDiv.firstChild) {
+      gridContainerDiv.removeChild(gridContainerDiv.firstChild);
+    }
   }
 }
 
