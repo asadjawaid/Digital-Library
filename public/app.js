@@ -138,18 +138,31 @@ function addBookToLibrary(e) {
 
     let readButton = document.createElement("button");
     readButton.id = "read-status-btn";
-    readButton.appendChild(document.createTextNode("Read"));
 
+    if (!isChecked) {
+      readButton.style.backgroundColor = "#EA4335";
+      readButton.appendChild(document.createTextNode("Not Read"));
+    } else {
+      readButton.appendChild(document.createTextNode("Read"));
+    }
     bookItemDiv.appendChild(readButton);
 
     gridContainerDiv.appendChild(bookItemDiv);
+
+    // reset values and remove from form
+    nameOfBook.value = "";
+    nameOfAuthor.value = "";
+    numberOfPages.value = "";
+    checkBoxRead.checked = false;
   }
 }
 
 // using event delegation by adding event listener to grid container then finding remove button
 function removeBook(e) {
+  // check if the icon has a parent with an id of "close-icon-text"
   if (e.target.parentElement.id === "close-icon-text") {
     if (confirm("Are you sure you want to remove this book?")) {
+      // select the book-item div and remove the div
       e.target.parentElement.parentElement.remove();
       console.log(e.target.parentElement.parentElement);
     }
@@ -158,8 +171,14 @@ function removeBook(e) {
 
 function removeAllBooks(e) {
   if (confirm("Are you sure you want to remove all books?")) {
-    while (gridContainerDiv.firstChild) {
-      gridContainerDiv.removeChild(gridContainerDiv.firstChild);
+    if (myLibrary.length === 0) {
+      alert("Error! You have no books in your library!");
+    } else {
+      // iterates over each child in the grid container and removes the first child.
+      while (gridContainerDiv.firstChild) {
+        gridContainerDiv.removeChild(gridContainerDiv.firstChild);
+        myLibrary.shift(); // remove book object from library array
+      }
     }
   }
 }
