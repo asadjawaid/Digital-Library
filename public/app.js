@@ -23,7 +23,9 @@ const numberOfPages = document.getElementById("sidebar-book-pages");
 const checkBoxRead = document.getElementById("sidebar-checkbox-read");
 const addBookButton = document.getElementById("add-book-btn");
 const removeAllBooksButton = document.getElementById("remove-all-books-btn");
+const gridContainerDiv = document.getElementById("grid-books-container"); // reference to main grid container
 
+console.log(gridContainerDiv);
 /* Event listeners */
 logoutButton.addEventListener("click", logoutUserOut);
 addBookButton.addEventListener("click", addBookToLibrary);
@@ -63,32 +65,83 @@ function addBookToLibrary(e) {
     const newBook = new Book(bookName, bookAuthor, bookPages, isChecked); // create a new book object
     myLibrary.push(newBook); // add book to list
 
-    // create elements
-    let gridContainerDiv = document.createElement("div"); // main container
     let bookItemDiv = document.createElement("div"); // child container of grid (individual book)
+    bookItemDiv.className = "book-item";
 
+    // paragraph and icon
     let removeBookText = document.createElement("p"); // parent of icon (removeBookIcon)
-    let removeBookIcon = document.createElement("i"); // child of removeBookText
+    removeBookText.id = "close-icon-text";
 
+    let removeBookIcon = document.createElement("i"); // child of removeBookText
+    removeBookIcon.className = "material-icons";
+    removeBookIcon.appendChild(document.createTextNode("close"));
+    removeBookText.appendChild(removeBookIcon);
+    bookItemDiv.appendChild(removeBookText);
+
+    // Book Name div
     let iconTextDiv = document.createElement("div");
+    iconTextDiv.className = "icon-text-div";
 
     let bookText = document.createElement("p");
     let bookIcon = document.createElement("i");
+    bookIcon.className = "material-icons";
+    bookIcon.appendChild(document.createTextNode("book"));
+    bookText.appendChild(bookIcon);
+
     let titleOfBook = document.createElement("p");
+    titleOfBook.appendChild(document.createTextNode(`Name: ${bookName}`));
+
+    iconTextDiv.appendChild(bookText);
+    iconTextDiv.appendChild(titleOfBook);
+
+    bookItemDiv.appendChild(iconTextDiv);
+
+    // Author Name div
+    let secondIconDiv = document.createElement("div");
+    secondIconDiv.className = "icon-text-div";
 
     let personText = document.createElement("p");
     let personIcon = document.createElement("i");
+    personIcon.className = "material-icons";
+    personIcon.appendChild(document.createTextNode("person"));
+    personText.appendChild(personIcon);
+
     let titleOfAuthor = document.createElement("p");
+    titleOfAuthor.appendChild(
+      document.createTextNode(`Author Name: ${bookAuthor}`)
+    );
+
+    secondIconDiv.appendChild(personText);
+    secondIconDiv.appendChild(titleOfAuthor);
+
+    bookItemDiv.appendChild(secondIconDiv);
+
+    // third
+    let thirdIconDiv = document.createElement("div");
+    thirdIconDiv.className = "icon-text-div";
 
     let pagesText = document.createElement("p");
     let pagesIcon = document.createElement("i");
+    pagesIcon.className = "material-icons";
+    pagesIcon.appendChild(document.createTextNode("tag"));
+    pagesText.appendChild(pagesIcon);
+
     let pagesNumberElement = document.createElement("p");
+    pagesNumberElement.appendChild(
+      document.createTextNode(`Total Number of pages: ${bookPages}`)
+    );
+
+    thirdIconDiv.appendChild(pagesText);
+    thirdIconDiv.appendChild(pagesNumberElement);
+    bookItemDiv.appendChild(thirdIconDiv);
 
     let readButton = document.createElement("button");
+    readButton.id = "read-status-btn";
+    readButton.appendChild(document.createTextNode("Read"));
 
-    // add styling to elements
+    bookItemDiv.appendChild(readButton);
 
-    // append elements
+    gridContainerDiv.appendChild(bookItemDiv);
   }
 }
 
