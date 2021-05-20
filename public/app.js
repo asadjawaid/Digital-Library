@@ -193,7 +193,7 @@ function updateLibraryLog() {
 
   // update ui
   libTotalBooks.innerHTML = `Total Books: ${totalCurrentBooks}`;
-  libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+  libTotalBooksRead.innerHTML = `Total book(s) read: ${totalBooksRead}`;
   libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
 
   // reset back to zero
@@ -203,19 +203,45 @@ function updateLibraryLog() {
 
 // using event delegation by adding event listener to grid container then finding remove button
 function removeBook(e) {
+  // get the entire sentence: "Name: ..."
   let pNode = e.target.parentElement.parentElement.childNodes[1].childNodes[1];
 
   // check if the icon has a parent with an id of "close-icon-text"
   if (e.target.parentElement.id === "close-icon-text") {
     if (confirm("Are you sure you want to remove this book?")) {
       // select the book-item div and remove the div
-      e.target.parentElement.parentElement.remove();
+      let bookToRemove = e.target.parentElement.parentElement;
+      let bookElements = Array.from(gridContainerDiv.children); // convert grid elements to array
+      let bookIndex = bookElements.indexOf(bookToRemove); // index of current book
+
+      // if the button is set as Read then get the number of books read from the text and
+      // decrement it by one
+      if (bookToRemove.lastElementChild.textContent === "Read") {
+        let booksRead = parseInt(
+          libTotalBooksRead.textContent.split(":")[1].trim()
+        );
+        totalBooksRead = booksRead - 1;
+        libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+      }
+      // if the button is set as Not Read then get the number of books not read from the text and
+      // decrement it by one
+      else if (bookToRemove.lastElementChild.textContent === "Not Read") {
+        let notRead = parseInt(
+          libTotalNotRead.textContent.split(":")[1].trim()
+        );
+        totalBooksNotRead = notRead - 1;
+        libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
+      }
+      bookToRemove.remove(); // remove book from ui
+
       // remove the object from the array
       myLibrary.forEach((currentBook, index) => {
-        if (pNode.textContent.includes(currentBook.getterBookName)) {
+        // if the book to delete has the same index as the current book then remove from array (myLibrary)
+        if (bookIndex === index) {
           myLibrary.splice(index, 1); // remove from array
         }
       });
+      libTotalBooks.innerHTML = `Total Books: ${myLibrary.length}`; // update total books
     }
   }
 }
