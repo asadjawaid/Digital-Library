@@ -274,7 +274,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     } else {
       navUsernameTitle.innerHTML = "Welcome " + user.displayName;
     }
-    console.log(user);
   } else {
     // No user is signed in.
     window.location = "index.html";
