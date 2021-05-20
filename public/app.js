@@ -1,5 +1,7 @@
 // Variables that will be used throughout the program
 let myLibrary = [];
+let totalBooksRead = 0;
+let totalBooksNotRead = 0;
 
 // class that defines a book (blue print)
 class Book {
@@ -8,6 +10,22 @@ class Book {
     this.bookAuthor = bookAuthor;
     this.totalPages = totalPages;
     this.readOrNot = readOrNot;
+  }
+
+  get getterBookName() {
+    return this.bookName;
+  }
+
+  get getterBookAuthor() {
+    return this.bookAuthor;
+  }
+
+  get getterTotalPages() {
+    return this.totalPages;
+  }
+
+  get getterReadOrNot() {
+    return this.readOrNot;
   }
 }
 
@@ -24,8 +42,10 @@ const checkBoxRead = document.getElementById("sidebar-checkbox-read");
 const addBookButton = document.getElementById("add-book-btn");
 const removeAllBooksButton = document.getElementById("remove-all-books-btn");
 const gridContainerDiv = document.getElementById("grid-books-container"); // reference to main grid container
+const libTotalBooks = document.getElementById("total-books");
+const libTotalBooksRead = document.getElementById("total-books-read");
+const libTotalNotRead = document.getElementById("total-books-notread");
 
-console.log(gridContainerDiv);
 /* Event listeners */
 logoutButton.addEventListener("click", logoutUserOut);
 addBookButton.addEventListener("click", addBookToLibrary);
@@ -149,6 +169,7 @@ function addBookToLibrary(e) {
 
     gridContainerDiv.appendChild(bookItemDiv);
 
+    updateLibraryLog();
     // reset values and remove from form
     nameOfBook.value = "";
     nameOfAuthor.value = "";
@@ -157,14 +178,44 @@ function addBookToLibrary(e) {
   }
 }
 
+// kind of works but needs fixing for duplicate value to totalBooksNotRead
+function updateLibraryLog() {
+  let totalCurrentBooks = myLibrary.length;
+
+  // iterate over each book object and check if they read the current book. If they read the book, increment totalBooksRead and vice versa.
+  myLibrary.forEach((currentBook) => {
+    if (currentBook.getterReadOrNot) {
+      totalBooksRead++;
+    } else {
+      totalBooksNotRead++;
+    }
+  });
+
+  // update ui
+  libTotalBooks.innerHTML = `Total Books: ${totalCurrentBooks}`;
+  libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+  libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
+
+  // reset back to zero
+  totalBooksRead = 0;
+  totalBooksNotRead = 0;
+}
+
 // using event delegation by adding event listener to grid container then finding remove button
 function removeBook(e) {
+  let pNode = e.target.parentElement.parentElement.childNodes[1].childNodes[1];
+
   // check if the icon has a parent with an id of "close-icon-text"
   if (e.target.parentElement.id === "close-icon-text") {
     if (confirm("Are you sure you want to remove this book?")) {
       // select the book-item div and remove the div
       e.target.parentElement.parentElement.remove();
-      console.log(e.target.parentElement.parentElement);
+      // remove the object from the array
+      myLibrary.forEach((currentBook, index) => {
+        if (pNode.textContent.includes(currentBook.getterBookName)) {
+          myLibrary.splice(index, 1); // remove from array
+        }
+      });
     }
   }
 }
@@ -181,6 +232,12 @@ function removeAllBooks(e) {
       }
     }
   }
+  totalBooksRead = 0;
+  totalBooksNotRead = 0;
+
+  libTotalBooks.innerHTML = `Total Books: ${0}`;
+  libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+  libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
 }
 
 //if the user is not signed in then redirect them to the login page (index.html) otherwise stay on the main page
