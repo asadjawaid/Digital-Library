@@ -1,5 +1,7 @@
 // Variables that will be used throughout the program
 let myLibrary = [];
+let myTotalBooksRead = []; // array of all books read
+let myTotalBookNotRead = []; // array of all books not read
 let totalBooksRead = 0;
 let totalBooksNotRead = 0;
 
@@ -27,6 +29,10 @@ class Book {
   get getterReadOrNot() {
     return this.readOrNot;
   }
+
+  // set setterReadOrNot(statusValue) {
+  //   this.readOrNot = statusValue;
+  // }
 }
 
 /* Firebase variables */
@@ -50,6 +56,7 @@ const libTotalNotRead = document.getElementById("total-books-notread");
 logoutButton.addEventListener("click", logoutUserOut);
 addBookButton.addEventListener("click", addBookToLibrary);
 gridContainerDiv.addEventListener("click", removeBook); // used for removing a book
+gridContainerDiv.addEventListener("click", changeBookStatus); // to change status of book
 removeAllBooksButton.addEventListener("click", removeAllBooks);
 
 /* Functions */
@@ -159,6 +166,7 @@ function addBookToLibrary(e) {
     let readButton = document.createElement("button");
     readButton.id = "read-status-btn";
 
+    // if the book is not set as not check then change the background color to read and display as "Not Read"
     if (!isChecked) {
       readButton.style.backgroundColor = "#EA4335";
       readButton.appendChild(document.createTextNode("Not Read"));
@@ -169,7 +177,7 @@ function addBookToLibrary(e) {
 
     gridContainerDiv.appendChild(bookItemDiv);
 
-    updateLibraryLog();
+    updateLibraryLog(); // call this method to update total books
     // reset values and remove from form
     nameOfBook.value = "";
     nameOfAuthor.value = "";
@@ -180,7 +188,7 @@ function addBookToLibrary(e) {
 
 // kind of works but needs fixing for duplicate value to totalBooksNotRead
 function updateLibraryLog() {
-  let totalCurrentBooks = myLibrary.length;
+  let totalCurrentBooks = myLibrary.length; // get the total length of books inside the array
 
   // iterate over each book object and check if they read the current book. If they read the book, increment totalBooksRead and vice versa.
   myLibrary.forEach((currentBook) => {
@@ -204,8 +212,7 @@ function updateLibraryLog() {
 // using event delegation by adding event listener to grid container then finding remove button
 function removeBook(e) {
   // get the entire sentence: "Name: ..."
-  let pNode = e.target.parentElement.parentElement.childNodes[1].childNodes[1];
-
+  //let pNode = e.target.parentElement.parentElement.childNodes[1].childNodes[1];
   // check if the icon has a parent with an id of "close-icon-text"
   if (e.target.parentElement.id === "close-icon-text") {
     if (confirm("Are you sure you want to remove this book?")) {
@@ -243,6 +250,64 @@ function removeBook(e) {
       });
       libTotalBooks.innerHTML = `Total Books: ${myLibrary.length}`; // update total books
     }
+  }
+}
+
+function changeBookStatus(e) {
+  currentBookStatus = false; // book not read
+  let buttonToChange = e.target; // button that was clicked on
+  let bookElements = Array.from(gridContainerDiv.children); // convert grid elements to array
+  let bookIndex = bookElements.indexOf(buttonToChange.parentElement);
+
+  // event delegation to ensure the user only clicks on the button
+  if (buttonToChange.id === "read-status-btn") {
+    // changing to not read
+    if (buttonToChange.textContent === "Read") {
+      buttonToChange.style.backgroundColor = "#EA4335";
+      buttonToChange.textContent = "Not Read";
+      currentBookStatus = false; // dont have to do this since its always false
+
+      myLibrary.forEach((currentBook, index) => {
+        if (bookIndex === index) {
+          currentBook.readOrNot = false;
+        }
+      });
+    }
+    // else condition, changing to book read
+    else if (buttonToChange.textContent === "Not Read") {
+      buttonToChange.style.backgroundColor = "#1AD087";
+      buttonToChange.textContent = "Read";
+      currentBookStatus = true;
+
+      myLibrary.forEach((currentBook, index) => {
+        console.log("Before: " + currentBook.getterReadOrNot);
+        if (bookIndex === index) {
+          currentBook.readOrNot = true;
+          console.log("After: " + currentBook.getterReadOrNot);
+          // update ui total number of books read and removed
+          // get total number of books read
+        }
+      });
+    }
+    // get total number of books read and not read
+    let booksRead = parseInt(
+      libTotalBooksRead.textContent.split(":")[1].trim()
+    );
+    let notRead = parseInt(libTotalNotRead.textContent.split(":")[1].trim());
+
+    // if the current book to change is now true increment read by 1 and decrement not read by 1 and vice versa
+    if (currentBookStatus) {
+      // book goes from "not read" to "read"
+      totalBooksRead = booksRead + 1;
+      totalBooksNotRead = notRead - 1;
+    } else {
+      // book goes from "read" to " not read"
+      totalBooksRead = booksRead - 1;
+      totalBooksNotRead = notRead + 1;
+    }
+    libTotalBooks.innerHTML = `Total Books: ${myLibrary.length}`; // update total books
+    libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+    libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
   }
 }
 
