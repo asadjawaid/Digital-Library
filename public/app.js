@@ -228,8 +228,6 @@ function updateLibraryLog() {
 
 // using event delegation by adding event listener to grid container then finding remove button
 function removeBook(e) {
-  // get the entire sentence: "Name: ..."
-  //let pNode = e.target.parentElement.parentElement.childNodes[1].childNodes[1];
   // check if the icon has a parent with an id of "close-icon-text"
   if (e.target.parentElement.id === "close-icon-text") {
     if (confirm("Are you sure you want to remove this book?")) {
@@ -257,11 +255,33 @@ function removeBook(e) {
         libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
       }
       bookToRemove.remove(); // remove book from ui
+      let myBooksFromDB = [];
 
       // remove the object from the array
       myLibrary.forEach((currentBook, index) => {
         // if the book to delete has the same index as the current book then remove from array (myLibrary)
         if (bookIndex === index) {
+          var myUser = auth.currentUser;
+
+          let bookToRemoveFromDB = database.ref("books" + "/" + myUser.uid);
+          bookToRemoveFromDB.once("value", (snapshot) => {
+            snapshot.forEach((myBook) => {
+              let data = myBook.val(); // get book object from db
+              myBooksFromDB.push(data); // append the book object to myBooksFromDB array
+
+              // iterate over myBooksFromDB array
+              myBooksFromDB.forEach((currentBookFromDB, dbBookIndex) => {
+                // if the book just added to the myBooksFromDB array and is equal to the current book
+                // in the myBooksFromDB array AND the index of the a book inside myBooksFromDB array
+                // is equal to the book we want to remove from the ui, then remove this book from the
+                // database
+                if (data === currentBookFromDB && dbBookIndex === index) {
+                  myBook.ref.remove(); // remove book from database
+                }
+              });
+            });
+          });
+
           myLibrary.splice(index, 1); // remove from array
         }
       });
