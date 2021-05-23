@@ -2,7 +2,7 @@
 let myLibrary = [];
 let totalBooksRead = 0;
 let totalBooksNotRead = 0;
-
+// const currentUserUsingApp = auth.currentUser;
 // class that defines a book (blue print)
 class Book {
   constructor(bookName, bookAuthor, totalPages, readOrNot) {
@@ -182,6 +182,19 @@ function addBookToLibrary(e) {
     gridContainerDiv.appendChild(bookItemDiv);
 
     updateLibraryLog(); // call this method to update total books
+
+    // add book to database
+    var user = auth.currentUser;
+    database
+      .ref("books" + "/" + user.uid)
+      .push({ newBook })
+      .then(() => {
+        console.log("Book Added");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+
     // reset values and remove from form
     nameOfBook.value = "";
     nameOfAuthor.value = "";
