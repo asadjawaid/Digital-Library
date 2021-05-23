@@ -43,9 +43,12 @@
   </div>
 
   <p id="made-by">Made by <a href="https://www.linkedin.com/in/asadjawaid-/" target="_blank">Asad Jawaid</a></p>
+
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
 
   <script>
     // Your web app's Firebase configuration
@@ -61,7 +64,10 @@
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-
+    
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const database = firebase.database();
   </script>
   <script src="login.js"></script>
 </body>

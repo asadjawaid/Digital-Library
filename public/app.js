@@ -1,7 +1,5 @@
 // Variables that will be used throughout the program
 let myLibrary = [];
-let myTotalBooksRead = []; // array of all books read
-let myTotalBookNotRead = []; // array of all books not read
 let totalBooksRead = 0;
 let totalBooksNotRead = 0;
 
@@ -29,13 +27,7 @@ class Book {
   get getterReadOrNot() {
     return this.readOrNot;
   }
-
-  // set setterReadOrNot(statusValue) {
-  //   this.readOrNot = statusValue;
-  // }
 }
-
-/* Firebase variables */
 
 /* Get elements from main.html */
 // side bar elements
@@ -60,10 +52,22 @@ gridContainerDiv.addEventListener("click", changeBookStatus); // to change statu
 removeAllBooksButton.addEventListener("click", removeAllBooks);
 
 /* Functions */
+auth.onAuthStateChanged((user) => {
+  // user is logged in already
+  if (user) {
+    console.log(user, " is logged on and inside app.js");
+    navUsernameTitle.innerHTML = "Welcome, " + user.displayName;
+    // LOAD DATA FOR CURRENT USER
+  }
+  // if the user is not logged into the application then keep them on the index.html page
+  else {
+    window.location = "index.html";
+  }
+});
+
 // Logout Function
 function logoutUserOut(e) {
-  firebase
-    .auth()
+  auth
     .signOut()
     .then(() => {
       // Sign-out successful.
@@ -228,7 +232,7 @@ function removeBook(e) {
           libTotalBooksRead.textContent.split(":")[1].trim()
         );
         totalBooksRead = booksRead - 1;
-        libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+        libTotalBooksRead.innerHTML = `Total book(s) read: ${totalBooksRead}`;
       }
       // if the button is set as Not Read then get the number of books not read from the text and
       // decrement it by one
@@ -306,7 +310,7 @@ function changeBookStatus(e) {
       totalBooksNotRead = notRead + 1;
     }
     libTotalBooks.innerHTML = `Total Books: ${myLibrary.length}`; // update total books
-    libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+    libTotalBooksRead.innerHTML = `Total book(s) read: ${totalBooksRead}`;
     libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
   }
 }
@@ -327,20 +331,6 @@ function removeAllBooks(e) {
   totalBooksNotRead = 0;
 
   libTotalBooks.innerHTML = `Total Books: ${0}`;
-  libTotalBooksRead.innerHTML = `Total book(s) to read: ${totalBooksRead}`;
+  libTotalBooksRead.innerHTML = `Total book(s) read: ${totalBooksRead}`;
   libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
 }
-
-//if the user is not signed in then redirect them to the login page (index.html) otherwise stay on the main page
-firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    if (user.displayName == null) {
-      navUsernameTitle.innerHTML = "Welcome!";
-    } else {
-      navUsernameTitle.innerHTML = "Welcome " + user.displayName;
-    }
-  } else {
-    // No user is signed in.
-    window.location = "index.html";
-  }
-});

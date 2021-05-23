@@ -19,6 +19,23 @@ googleLoginButton.addEventListener("click", googleLogin);
 signUpButton.addEventListener("click", registerUser);
 loginButton.addEventListener("click", loginUser);
 
+// check the state. If the user has signed in before then redirect them to the main page (main.html) otherwise stay on the login page
+auth.onAuthStateChanged((user) => {
+  // user is logged in already
+  if (user) {
+    console.log(user, "is logged in (login.js)");
+
+    database
+      .ref("users" + "/" + user.uid)
+      .set({ Name: user.displayName, Email: user.email })
+      .then(() => {
+        window.location = "main.html"; // redirect them to main page
+      });
+  } else {
+    console.log(user, "is not logged in");
+  }
+});
+
 // This function shows a pop up menu to to allow the user to login into the website using their google account
 function googleLogin(e) {
   e.preventDefault(); // prevent default behavior of submit
@@ -62,30 +79,12 @@ function registerUser(e) {
     window.alert("Password must be greater than 6 characters to register!");
   } else {
     // register the user then redirect them to the main page.
-    console.log(userName, userEmail, userPassword);
-    firebase
-      .auth()
+    auth
       .createUserWithEmailAndPassword(userEmail, userPassword)
-      .then((userCredential) => {
-        const user = firebase.auth().currentUser;
-
-        user
-          .updateProfile({
-            displayName: userName,
-          })
-          .then(function () {
-            // Update successful.
-          })
-          .catch(function (error) {
-            // An error happened.
-          });
-
-        signUpForm.reset(); // clear input fields
-        window.location = "main.html"; // redirect the user to the main page
+      .then((userResult) => {
+        return userResult.user.updateProfile({ displayName: userName });
       })
       .catch((error) => {
-        var errorCode = error.code;
-        console.log(errorCode);
         window.alert("Error registering! Please try again!");
       });
   }
@@ -106,25 +105,15 @@ function loginUser(e) {
   } else if (userPassword.length < 6) {
     window.alert("Password must be greater than 6 characters to register!");
   } else {
-    firebase
-      .auth()
+    auth
       .signInWithEmailAndPassword(userEmail, userPassword)
-      .then((userCredential) => {
+      .then(() => {
         signUpForm.reset(); // clear input fields
         window.location = "main.html"; // redirect the user to the main page
       })
       .catch((error) => {
-        var errorCode = error.code;
         var errorMessage = error.message;
         window.alert(errorMessage);
       });
   }
 }
-
-// check the state. If the user has signed in before then redirect them to the main page (main.html) otherwise stay on the login page
-firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    // if the user has successfully logged into their google account then redirect them to main.html
-    window.location = "main.html";
-  }
-});
