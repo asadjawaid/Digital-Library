@@ -358,6 +358,9 @@ function removeAllBooks(e) {
         gridContainerDiv.removeChild(gridContainerDiv.firstChild);
         myLibrary.shift(); // remove book object from library array
       }
+      var myUser = auth.currentUser;
+      let bookToRemoveFromDB = database.ref("books" + "/" + myUser.uid);
+      bookToRemoveFromDB.remove();
     }
   }
   totalBooksRead = 0;
