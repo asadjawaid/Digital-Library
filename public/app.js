@@ -58,6 +58,26 @@ auth.onAuthStateChanged((user) => {
     console.log(user, " is logged on and inside app.js");
     navUsernameTitle.innerHTML = "Welcome, " + user.displayName;
     // LOAD DATA FOR CURRENT USER
+    let booksToLoadFromDB = database.ref("books" + "/" + user.uid);
+
+    booksToLoadFromDB.once(
+      "value",
+      (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          let bookObject = childSnapshot.val();
+
+          let authorDB = bookObject.author;
+          let bookNameDB = bookObject.name;
+          let bookPagesDB = bookObject.page;
+          let bookStatusDB = bookObject.status;
+
+          createBook(authorDB, bookNameDB, bookPagesDB, bookStatusDB);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   // if the user is not logged into the application then keep them on the index.html page
   else {
@@ -78,6 +98,97 @@ function logoutUserOut(e) {
     });
 }
 
+function createBook(bookName, bookAuthor, bookPages, isChecked) {
+  const newBook = new Book(bookName, bookAuthor, bookPages, isChecked); // create a new book object
+  myLibrary.push(newBook); // add book to list
+
+  let bookItemDiv = document.createElement("div"); // child container of grid (individual book)
+  bookItemDiv.className = "book-item";
+
+  // paragraph and icon
+  let removeBookText = document.createElement("p"); // parent of icon (removeBookIcon)
+  removeBookText.id = "close-icon-text";
+
+  let removeBookIcon = document.createElement("i"); // child of removeBookText
+  removeBookIcon.className = "material-icons";
+  removeBookIcon.appendChild(document.createTextNode("close"));
+  removeBookText.appendChild(removeBookIcon);
+  bookItemDiv.appendChild(removeBookText);
+
+  // Book Name div
+  let iconTextDiv = document.createElement("div");
+  iconTextDiv.className = "icon-text-div";
+
+  let bookText = document.createElement("p");
+  let bookIcon = document.createElement("i");
+  bookIcon.className = "material-icons";
+  bookIcon.appendChild(document.createTextNode("book"));
+  bookText.appendChild(bookIcon);
+
+  let titleOfBook = document.createElement("p");
+  titleOfBook.appendChild(document.createTextNode(`Name: ${bookName}`));
+
+  iconTextDiv.appendChild(bookText);
+  iconTextDiv.appendChild(titleOfBook);
+
+  bookItemDiv.appendChild(iconTextDiv);
+
+  // Author Name div
+  let secondIconDiv = document.createElement("div");
+  secondIconDiv.className = "icon-text-div";
+
+  let personText = document.createElement("p");
+  let personIcon = document.createElement("i");
+  personIcon.className = "material-icons";
+  personIcon.appendChild(document.createTextNode("person"));
+  personText.appendChild(personIcon);
+
+  let titleOfAuthor = document.createElement("p");
+  titleOfAuthor.appendChild(
+    document.createTextNode(`Author Name: ${bookAuthor}`)
+  );
+
+  secondIconDiv.appendChild(personText);
+  secondIconDiv.appendChild(titleOfAuthor);
+
+  bookItemDiv.appendChild(secondIconDiv);
+
+  // third
+  let thirdIconDiv = document.createElement("div");
+  thirdIconDiv.className = "icon-text-div";
+
+  let pagesText = document.createElement("p");
+  let pagesIcon = document.createElement("i");
+  pagesIcon.className = "material-icons";
+  pagesIcon.appendChild(document.createTextNode("tag"));
+  pagesText.appendChild(pagesIcon);
+
+  let pagesNumberElement = document.createElement("p");
+  pagesNumberElement.appendChild(
+    document.createTextNode(`Total Number of pages: ${bookPages}`)
+  );
+
+  thirdIconDiv.appendChild(pagesText);
+  thirdIconDiv.appendChild(pagesNumberElement);
+  bookItemDiv.appendChild(thirdIconDiv);
+
+  let readButton = document.createElement("button");
+  readButton.id = "read-status-btn";
+
+  // if the book is not set as not check then change the background color to read and display as "Not Read"
+  if (!isChecked) {
+    readButton.style.backgroundColor = "#EA4335";
+    readButton.appendChild(document.createTextNode("Not Read"));
+  } else {
+    readButton.appendChild(document.createTextNode("Read"));
+  }
+  bookItemDiv.appendChild(readButton);
+
+  gridContainerDiv.appendChild(bookItemDiv);
+
+  updateLibraryLog(); // call this method to update total books
+}
+
 // add book to the library function
 function addBookToLibrary(e) {
   let bookName = nameOfBook.value;
@@ -94,100 +205,18 @@ function addBookToLibrary(e) {
   } else if (bookPages === "") {
     alert("Please enter the number of pages");
   } else {
-    const newBook = new Book(bookName, bookAuthor, bookPages, isChecked); // create a new book object
-    myLibrary.push(newBook); // add book to list
-
-    let bookItemDiv = document.createElement("div"); // child container of grid (individual book)
-    bookItemDiv.className = "book-item";
-
-    // paragraph and icon
-    let removeBookText = document.createElement("p"); // parent of icon (removeBookIcon)
-    removeBookText.id = "close-icon-text";
-
-    let removeBookIcon = document.createElement("i"); // child of removeBookText
-    removeBookIcon.className = "material-icons";
-    removeBookIcon.appendChild(document.createTextNode("close"));
-    removeBookText.appendChild(removeBookIcon);
-    bookItemDiv.appendChild(removeBookText);
-
-    // Book Name div
-    let iconTextDiv = document.createElement("div");
-    iconTextDiv.className = "icon-text-div";
-
-    let bookText = document.createElement("p");
-    let bookIcon = document.createElement("i");
-    bookIcon.className = "material-icons";
-    bookIcon.appendChild(document.createTextNode("book"));
-    bookText.appendChild(bookIcon);
-
-    let titleOfBook = document.createElement("p");
-    titleOfBook.appendChild(document.createTextNode(`Name: ${bookName}`));
-
-    iconTextDiv.appendChild(bookText);
-    iconTextDiv.appendChild(titleOfBook);
-
-    bookItemDiv.appendChild(iconTextDiv);
-
-    // Author Name div
-    let secondIconDiv = document.createElement("div");
-    secondIconDiv.className = "icon-text-div";
-
-    let personText = document.createElement("p");
-    let personIcon = document.createElement("i");
-    personIcon.className = "material-icons";
-    personIcon.appendChild(document.createTextNode("person"));
-    personText.appendChild(personIcon);
-
-    let titleOfAuthor = document.createElement("p");
-    titleOfAuthor.appendChild(
-      document.createTextNode(`Author Name: ${bookAuthor}`)
-    );
-
-    secondIconDiv.appendChild(personText);
-    secondIconDiv.appendChild(titleOfAuthor);
-
-    bookItemDiv.appendChild(secondIconDiv);
-
-    // third
-    let thirdIconDiv = document.createElement("div");
-    thirdIconDiv.className = "icon-text-div";
-
-    let pagesText = document.createElement("p");
-    let pagesIcon = document.createElement("i");
-    pagesIcon.className = "material-icons";
-    pagesIcon.appendChild(document.createTextNode("tag"));
-    pagesText.appendChild(pagesIcon);
-
-    let pagesNumberElement = document.createElement("p");
-    pagesNumberElement.appendChild(
-      document.createTextNode(`Total Number of pages: ${bookPages}`)
-    );
-
-    thirdIconDiv.appendChild(pagesText);
-    thirdIconDiv.appendChild(pagesNumberElement);
-    bookItemDiv.appendChild(thirdIconDiv);
-
-    let readButton = document.createElement("button");
-    readButton.id = "read-status-btn";
-
-    // if the book is not set as not check then change the background color to read and display as "Not Read"
-    if (!isChecked) {
-      readButton.style.backgroundColor = "#EA4335";
-      readButton.appendChild(document.createTextNode("Not Read"));
-    } else {
-      readButton.appendChild(document.createTextNode("Read"));
-    }
-    bookItemDiv.appendChild(readButton);
-
-    gridContainerDiv.appendChild(bookItemDiv);
-
-    updateLibraryLog(); // call this method to update total books
+    createBook(bookName, bookAuthor, bookPages, isChecked);
 
     // add book to database
     var user = auth.currentUser;
     database
       .ref("books" + "/" + user.uid)
-      .push({ newBook })
+      .push({
+        name: bookName,
+        author: bookAuthor,
+        status: isChecked,
+        page: bookPages,
+      })
       .then(() => {
         console.log("Book Added");
       })
