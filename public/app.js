@@ -285,14 +285,13 @@ function removeBook(e) {
       }
       bookToRemove.remove(); // remove book from ui
       let myBooksFromDB = [];
+      var myUser = auth.currentUser;
+      let bookToRemoveFromDB = database.ref("books" + "/" + myUser.uid);
 
       // remove the object from the array
       myLibrary.forEach((currentBook, index) => {
         // if the book to delete has the same index as the current book then remove from array (myLibrary)
         if (bookIndex === index) {
-          var myUser = auth.currentUser;
-
-          let bookToRemoveFromDB = database.ref("books" + "/" + myUser.uid);
           bookToRemoveFromDB.once("value", (snapshot) => {
             snapshot.forEach((myBook) => {
               let data = myBook.val(); // get book object from db
@@ -310,7 +309,6 @@ function removeBook(e) {
               });
             });
           });
-
           myLibrary.splice(index, 1); // remove from array
         }
       });
@@ -324,6 +322,9 @@ function changeBookStatus(e) {
   let buttonToChange = e.target; // button that was clicked on
   let bookElements = Array.from(gridContainerDiv.children); // convert grid elements to array
   let bookIndex = bookElements.indexOf(buttonToChange.parentElement);
+  var myUser = auth.currentUser;
+  let bookToChangeFromDB = database.ref("books" + "/" + myUser.uid);
+  let tempBookArray = [];
 
   // event delegation to ensure the user only clicks on the button
   if (buttonToChange.id === "read-status-btn") {
@@ -346,15 +347,34 @@ function changeBookStatus(e) {
       currentBookStatus = true;
 
       myLibrary.forEach((currentBook, index) => {
-        console.log("Before: " + currentBook.getterReadOrNot);
         if (bookIndex === index) {
           currentBook.readOrNot = true;
-          console.log("After: " + currentBook.getterReadOrNot);
-          // update ui total number of books read and removed
-          // get total number of books read
         }
       });
     }
+
+    bookToChangeFromDB.once("value", (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        let currentBookToChange = childSnapshot.val();
+        tempBookArray.push(currentBookToChange);
+
+        tempBookArray.forEach((tempBook, tempIndex) => {
+          if (bookIndex === tempIndex && tempBook === currentBookToChange) {
+            // if the status of the current book is true then change it to false and vice versa
+            if (currentBookToChange.status) {
+              database
+                .ref("books" + "/" + myUser.uid + "/" + childSnapshot.key)
+                .update({ status: false });
+            } else {
+              database
+                .ref("books" + "/" + myUser.uid + "/" + childSnapshot.key)
+                .update({ status: true });
+            }
+          }
+        });
+      });
+    });
+
     // get total number of books read and not read
     let booksRead = parseInt(
       libTotalBooksRead.textContent.split(":")[1].trim()
