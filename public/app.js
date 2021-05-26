@@ -2,7 +2,7 @@
 let myLibrary = [];
 let totalBooksRead = 0;
 let totalBooksNotRead = 0;
-// const currentUserUsingApp = auth.currentUser;
+
 // class that defines a book (blue print)
 class Book {
   constructor(bookName, bookAuthor, totalPages, readOrNot) {

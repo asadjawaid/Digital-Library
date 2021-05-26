@@ -41,20 +41,11 @@ function googleLogin(e) {
   e.preventDefault(); // prevent default behavior of submit
   let provider = new firebase.auth.GoogleAuthProvider();
 
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then((result) => {
-      // The signed-in user info.
-      var user = result.user;
-      console.log(user);
-      window.location = "main.html";
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      var errorCode = error.code;
-      console.log(errorCode);
-    });
+  auth.signInWithPopup(provider).catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    console.log(errorCode);
+  });
 }
 
 // This function is used to register a user and redirect them to the main page
