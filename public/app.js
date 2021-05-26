@@ -360,15 +360,15 @@ function changeBookStatus(e) {
 
         tempBookArray.forEach((tempBook, tempIndex) => {
           if (bookIndex === tempIndex && tempBook === currentBookToChange) {
+            let refToStatusToChange = database.ref(
+              "books" + "/" + myUser.uid + "/" + childSnapshot.key
+            );
+
             // if the status of the current book is true then change it to false and vice versa
             if (currentBookToChange.status) {
-              database
-                .ref("books" + "/" + myUser.uid + "/" + childSnapshot.key)
-                .update({ status: false });
+              refToStatusToChange.update({ status: false });
             } else {
-              database
-                .ref("books" + "/" + myUser.uid + "/" + childSnapshot.key)
-                .update({ status: true });
+              refToStatusToChange.update({ status: true });
             }
           }
         });
