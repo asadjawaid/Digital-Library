@@ -117,3 +117,52 @@ a:visited {
 .form-sign-in .inner-form-div #sign-in-div #sign-in-google {
   background-color: #ea4335;
 }
+
+/**************************
+ Media queries
+**************************/
+
+/* Mobile */
+@media only screen and (max-width: 500px) {
+  #header-title {
+    font-size: 2.3em;
+    margin: 30px 0 40px 0;
+  }
+  .form-sign-in {
+    width: 90%;
+    border-bottom-right-radius: 5%;
+    border-bottom-left-radius: 5%;
+    /* margin-bottom: 60px; */
+  }
+
+  .form-sign-in .form-header {
+    background-color: #066eaf;
+    padding: 15px 0;
+  }
+
+  .form-sign-in #get-started-text {
+    font-size: 0.75em;
+  }
+
+  .form-sign-in .inner-form-div {
+    margin: 0 20px;
+    padding: 30px 0;
+  }
+
+  .form-sign-in .inner-form-div #sign-up-div,
+  .form-sign-in .inner-form-div #sign-in-div {
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .form-sign-in .inner-form-div #sign-in-div {
+    margin-bottom: 0;
+  }
+}
+
+/* Tablets (ipad etc.) */
+@media (min-width: 501px) and (max-width: 768px) {
+  #header-title {
+    font-size: 3em;
+  }
+}
