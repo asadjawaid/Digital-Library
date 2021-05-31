@@ -17,6 +17,7 @@ body {
 
 /* sidebar content */
 .sidebar {
+  /* display: block; */
   position: fixed;
   background-color: #066eaf;
   width: 400px;
@@ -25,6 +26,7 @@ body {
   left: 0;
   z-index: 1;
   padding: 30px;
+  overflow: hidden;
 }
 
 .sidebar #sidebar-header-text {
@@ -149,6 +151,18 @@ body {
   cursor: pointer;
 }
 
+#main-content nav #show-menu {
+  display: none;
+  padding: 10px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: #02283f;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 200;
+  cursor: pointer;
+}
+
 /* card styling for each book */
 #main-content #grid-books-container {
   display: grid;
@@ -196,4 +210,135 @@ body {
   background-color: #1ad087;
   font-size: 1.2em;
   color: #001422;
+}
+
+/* Media Queries*/
+/* Mobile */
+@media only screen and (max-width: 500px) {
+  .sidebar {
+    display: none;
+    position: inherit;
+    width: auto;
+    padding: 10px;
+    height: fit-content;
+    bottom: 0;
+  }
+
+  .sidebar #sidebar-header-text {
+    display: none;
+  }
+
+  .sidebar .sidebar-book-info .label-text {
+    display: none;
+  }
+
+  .sidebar .sidebar-book-info .input-text {
+    margin-bottom: 10px;
+  }
+
+  .sidebar .sidebar-book-info .sidebar-buttons {
+    margin-bottom: 10px;
+  }
+
+  .sidebar .sidebar-book-info .sidebar-checkbox-div label {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+
+  .sidebar .sidebar-book-info .library-log-div {
+    background-color: #02283f;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .sidebar .sidebar-book-info .library-log-div h1 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .sidebar .sidebar-book-info .library-log-div .lib-log-text {
+    margin-bottom: 10px;
+    font-size: 0.8em;
+  }
+
+  .sidebar .sidebar-book-info #made-by {
+    display: none;
+  }
+
+  #main-content {
+    margin: 0;
+  }
+
+  #main-content nav {
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #main-content nav h1 {
+    color: #eef3e0;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  #main-content nav #logout-btn {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  #main-content nav #show-menu {
+    display: block;
+  }
+
+  #main-content #grid-books-container {
+    grid-template-columns: 1fr;
+    column-gap: 20px;
+    padding: 20px;
+  }
+}
+
+/* Tablets (ipad etc.) */
+@media (min-width: 501px) and (max-width: 768px) {
+}
+
+/* Laptops */
+@media (min-width: 1280px) and (min-height: 800px) {
+  .sidebar {
+    width: 370px;
+    padding: 20px;
+  }
+  .sidebar .sidebar-book-info .library-log-div {
+    margin-top: 10px;
+    padding: 20px 15px;
+  }
+
+  .sidebar .sidebar-book-info #made-by {
+    margin-top: 40px;
+  }
+
+  #main-content {
+    margin-left: 370px;
+  }
+}
+
+@media (min-width: 1280px) and (min-height: 950px) {
+  .sidebar .sidebar-book-info .library-log-div {
+    margin-top: 80px;
+    padding: 20px 15px;
+  }
+
+  .sidebar .sidebar-book-info #made-by {
+    margin-top: 120px;
+  }
+}
+
+@media (min-width: 1440px) and (min-height: 900px) {
+  .sidebar .sidebar-book-info .library-log-div {
+    margin-top: 80px;
+    padding: 20px 15px;
+  }
+
+  .sidebar .sidebar-book-info #made-by {
+    margin-top: 70px;
+  }
 }

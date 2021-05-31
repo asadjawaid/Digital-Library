@@ -43,6 +43,7 @@ const gridContainerDiv = document.getElementById("grid-books-container"); // ref
 const libTotalBooks = document.getElementById("total-books");
 const libTotalBooksRead = document.getElementById("total-books-read");
 const libTotalNotRead = document.getElementById("total-books-notread");
+const sideBar = document.getElementsByClassName("sidebar")[0];
 
 /* Event listeners */
 logoutButton.addEventListener("click", logoutUserOut);
@@ -50,6 +51,16 @@ addBookButton.addEventListener("click", addBookToLibrary);
 gridContainerDiv.addEventListener("click", removeBook); // used for removing a book
 gridContainerDiv.addEventListener("click", changeBookStatus); // to change status of book
 removeAllBooksButton.addEventListener("click", removeAllBooks);
+
+window.addEventListener("resize", () => {
+  if (screen.width >= 1200) {
+    sideBar.style.display = "block";
+  }
+  // if the size of the screen width is between 0 and 500 then hide the sidebar
+  else if (screen.width >= 0 && screen.width <= 500) {
+    sideBar.style.display = "none";
+  }
+});
 
 /* Functions */
 auth.onAuthStateChanged((user) => {
@@ -418,4 +429,14 @@ function removeAllBooks(e) {
   libTotalBooks.innerHTML = `Total Books: ${0}`;
   libTotalBooksRead.innerHTML = `Total book(s) read: ${totalBooksRead}`;
   libTotalNotRead.innerHTML = `Total book(s) not read: ${totalBooksNotRead}`;
+}
+
+function openMenu() {
+  if (sideBar.style.display === "") {
+    sideBar.style.display = "block";
+  } else if (sideBar.style.display === "none") {
+    sideBar.style.display = "block";
+  } else if (sideBar.style.display === "block") {
+    sideBar.style.display = "none";
+  }
 }
