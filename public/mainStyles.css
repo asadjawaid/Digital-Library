@@ -298,8 +298,8 @@ body {
 }
 
 /* Tablets (ipad etc.) */
-@media (min-width: 501px) and (max-width: 768px) {
-}
+/* @media (min-width: 501px) and (max-width: 768px) {
+} */
 
 /* Laptops */
 @media (min-width: 1280px) and (min-height: 800px) {
